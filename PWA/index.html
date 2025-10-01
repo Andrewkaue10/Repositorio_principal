@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PWA - País & Câmera</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <div class="container">
+    <h1>Descubra o seu país: </h1>
+    <button id="getLocation">📍 Detectar minha localização</button>
+    <div id="info" class="card"></div>
+
+    <h2> Câmera</h2>
+    <button id="openCamera">Abrir câmera</button>
+    <video id="camera" autoplay playsinline></video>
+    <canvas id="snapshot"></canvas>
+    <button id="takePhoto" style="display:none;"> Tirar foto</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
