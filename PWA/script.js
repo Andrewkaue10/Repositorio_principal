@@ -14,7 +14,6 @@ async function showPosition(position) {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
 
-    // Obter país pelo Nominatim
     const geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`);
     const geoData = await geoRes.json();
 
@@ -24,8 +23,6 @@ async function showPosition(position) {
     }
 
     const country = geoData.address.country;
-
-    // Buscar dados do país na REST Countries API
     const countryRes = await fetch(`https://restcountries.com/v3.1/name/${country}`);
     const countryData = await countryRes.json();
 
