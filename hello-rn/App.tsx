@@ -16,12 +16,12 @@ const App: React.FC = () => {
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Image
-          source={{ uri: "https://via.placeholder.com/200" }} // coloque sua foto real aqui
+          source={{ uri: "https://via.placeholder.com/200" }}
           style={styles.profilePic}
         />
         <Text style={styles.name}>Andrew Kauê</Text>
         <Text style={styles.title}>
-          Desenvolvedor Full Stack | Técnico em TI
+          Desenvolvedor Front-end | Técnico em TI
         </Text>
       </View>
 
@@ -40,11 +40,11 @@ const App: React.FC = () => {
       {/* Experiências */}
       <Card style={styles.card}>
         <Card.Content>
-          <Text style={styles.sectionTitle}>💼 Experiências</Text>
+          <Text style={styles.sectionTitle}>Experiências</Text>
           <Text style={styles.text}>
-            🚀 Desenvolvedor na No Start (Startup de jogos indie){"\n"}
-            💡 Criação de interfaces, sistemas em Java e banco de dados SQL{"\n"}
-            🧠 Desenvolvimento de aplicativos educacionais e projetos visuais
+             Desenvolvedor na No Start (Startup de jogos indie){"\n"}
+             Criação de interfaces, sistemas em Java e banco de dados SQL{"\n"}
+             Desenvolvimento de aplicativos educacionais e projetos visuais
             interativos
           </Text>
         </Card.Content>
@@ -53,7 +53,7 @@ const App: React.FC = () => {
       {/* Habilidades */}
       <Card style={styles.card}>
         <Card.Content>
-          <Text style={styles.sectionTitle}>🧩 Habilidades</Text>
+          <Text style={styles.sectionTitle}> Habilidades</Text>
           <Text style={styles.text}>
             • React / React Native{"\n"}• Java / SQL{"\n"}• HTML / CSS /
             JavaScript{"\n"}• UI Design e prototipagem{"\n"}• Banco de Dados &
@@ -65,7 +65,7 @@ const App: React.FC = () => {
       {/* Contatos */}
       <Card style={styles.card}>
         <Card.Content>
-          <Text style={styles.sectionTitle}>🌐 Contatos</Text>
+          <Text style={styles.sectionTitle}> Contatos</Text>
           <View style={styles.links}>
             <TouchableOpacity
               style={styles.linkButton}
@@ -86,7 +86,7 @@ const App: React.FC = () => {
         </Card.Content>
       </Card>
 
-      <Text style={styles.footer}>Feito com ❤️ por Andrew Kauê</Text>
+      <Text style={styles.footer}>Feito por Andrew Kauê</Text>
     </ScrollView>
   );
 };
