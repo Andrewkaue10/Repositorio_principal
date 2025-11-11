@@ -63,7 +63,6 @@ export default function App() {
       periodo: 'Fev. de 2025',
       cargo: 'Desenvolvimento de projeto - PI',
       descricao: 'Elaboração de front-end de um dashboard para o evento do demoday.',
-      link: 'https://www.figma.com/proto/1n9sXoVh7mLZt2l3a5j8eM/Movarte---Dashboard?page-id=0%3A1&node-id=1-2&viewport=241%2C48%2C0.25&scaling=min-zoom'
         },
       {
       id: 3,
