@@ -52,7 +52,7 @@ export default function App() {
   const experiencia: Experiencia[] = [
     {
       id: 1,
-      empresa: 'Crtlfile',
+      empresa: 'Ctrlfile',
       periodo: 'Jun. de 2023 - Dez. de 2023',
       cargo: 'Desenvolvimento de Projeto - PI',
       descricao: 'Site Front-end voltado para seder serviços de armazenamento em nuvem.'
@@ -71,6 +71,7 @@ export default function App() {
       periodo: 'Julho de 2025',
       cargo: 'Desenvolvimento de projeto - PI',
       descricao: 'Elaboração front-end de um dashboard para o Arco-mix, Tive a honra de ser o scrum master do projeto, o projeto tinha como objetivo criar um dashboard para o Arco-mix, um evento de tecnologia e inovação. O dashboard foi desenvolvido utilizando React, TypeScript e Tailwind CSS, e foi projetado para ser responsivo e fácil de usar. O projeto foi um sucesso, e o dashboard foi utilizado durante o evento para fornecer informações em tempo real sobre as atividades, palestrantes e expositores.',
+      link: 'https://www.figma.com/proto/E9fsNNGuPEPUPSxL2Yvboh/Arco-mix?node-id=648-134&starting-point-node-id=691%3A897'    
     }
   ];
 
@@ -79,13 +80,13 @@ export default function App() {
       id: 1,
       curso: 'Análise e Desenvolvimento de Sistemas',
       instituicao: 'Faculdade Senac Pernambuco',
-      periodo: '2024 - Dez. de 2026'
+      periodo: 'fev de 2024 - Dez de 2026'
     },
     {
       id: 2,
       curso: 'Ensino médio + Curso Técnico',
       instituicao: 'Mediotec Senac Pernambuco',
-      periodo: '2022 - Dez. de 2024'
+      periodo: 'fev de 2022 - Dez de 2024'
     }
   ];
 
