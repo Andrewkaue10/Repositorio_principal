@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   View, 
   Text, 
@@ -8,7 +8,8 @@ import {
   Linking,
   TouchableOpacity,
   StatusBar,
-  useWindowDimensions
+  useWindowDimensions,
+  ActivityIndicator
 } from 'react-native';
 import { Ionicons, MaterialIcons, FontAwesome5, Feather } from '@expo/vector-icons';
 
@@ -43,10 +44,26 @@ type Contato = {
   link?: string;
 };
 
+// Tipos para a API do GitHub
+type Repositorio = {
+  id: number;
+  name: string;
+  description: string;
+  html_url: string;
+  language: string;
+  stargazers_count: number;
+  forks_count: number;
+  updated_at: string;
+};
+
 export default function App() {
   const { width } = useWindowDimensions();
   const isSmallScreen = width < 375;
   const isLargeScreen = width > 768;
+
+  // Estados para a API do GitHub
+  const [repositorios, setRepositorios] = useState<Repositorio[]>([]);
+  const [carregando, setCarregando] = useState(true);
 
   // Dados do currículo
   const experiencia: Experiencia[] = [
@@ -63,13 +80,13 @@ export default function App() {
       periodo: 'Fev. de 2025',
       cargo: 'Desenvolvimento de projeto - PI',
       descricao: 'Elaboração de front-end de um dashboard para o evento do demoday.',
-        },
-      {
+    },
+    {
       id: 3,
       empresa: 'Dashboard Arco-Mix',
       periodo: 'Julho de 2025',
       cargo: 'Desenvolvimento de projeto - PI',
-      descricao: 'Elaboração front-end de um dashboard para o Arco-mix, Tive a honra de ser o scrum master do projeto, o projeto tinha como objetivo criar um dashboard para o Arco-mix, um evento de tecnologia e inovação. O dashboard foi desenvolvido utilizando React, TypeScript e Tailwind CSS, e foi projetado para ser responsivo e fácil de usar. O projeto foi um sucesso, e o dashboard foi utilizado durante o evento para fornecer informações em tempo real sobre as atividades, palestrantes e expositores.',
+      descricao: 'Elaboração front-end de um dashboard para o Arco-mix, Tive a honra de ser o scrum master do projeto.',
       link: 'https://www.figma.com/proto/E9fsNNGuPEPUPSxL2Yvboh/Arco-mix?node-id=648-134&starting-point-node-id=691%3A897'    
     }
   ];
@@ -153,6 +170,23 @@ export default function App() {
       link: 'https://www.linkedin.com/in/andrew-kau%C3%AA-57380b2a8/'
     }
   ];
+
+  // Buscar repositórios do GitHub
+  useEffect(() => {
+    const buscarRepositorios = async () => {
+      try {
+        const resposta = await fetch('https://api.github.com/users/AndrewKaue10/repos?sort=updated&per_page=5');
+        const dados = await resposta.json();
+        setRepositorios(dados);
+      } catch (error) {
+        console.error('Erro ao buscar repositórios:', error);
+      } finally {
+        setCarregando(false);
+      }
+    };
+
+    buscarRepositorios();
+  }, []);
 
   // Funções para lidar com cliques
   const handlePressContato = (link?: string): void => {
@@ -270,6 +304,63 @@ export default function App() {
         ]}>{item.periodo}</Text>
       </View>
     </View>
+  );
+
+  // Componente para renderizar repositórios do GitHub
+  const renderRepositorio = (repositorio: Repositorio) => (
+    <TouchableOpacity 
+      key={repositorio.id}
+      style={[
+        styles.repositorioItem,
+        isSmallScreen && styles.repositorioItemSmall
+      ]}
+      onPress={() => handlePressProjeto(repositorio.html_url)}
+    >
+      <View style={styles.repositorioHeader}>
+        <Feather name="github" size={16} color="#6366f1" />
+        <Text style={[
+          styles.repositorioNome,
+          isSmallScreen && styles.repositorioNomeSmall
+        ]}>{repositorio.name}</Text>
+      </View>
+      
+      {repositorio.description && (
+        <Text style={[
+          styles.repositorioDescricao,
+          isSmallScreen && styles.repositorioDescricaoSmall
+        ]}>
+          {repositorio.description}
+        </Text>
+      )}
+      
+      <View style={styles.repositorioStats}>
+        {repositorio.language && (
+          <View style={styles.repositorioStat}>
+            <View style={[styles.linguagemDot, { backgroundColor: '#6366f1' }]} />
+            <Text style={[
+              styles.repositorioStatText,
+              isSmallScreen && styles.repositorioStatTextSmall
+            ]}>{repositorio.language}</Text>
+          </View>
+        )}
+        
+        <View style={styles.repositorioStat}>
+          <Feather name="star" size={12} color="#f59e0b" />
+          <Text style={[
+            styles.repositorioStatText,
+            isSmallScreen && styles.repositorioStatTextSmall
+          ]}>{repositorio.stargazers_count}</Text>
+        </View>
+        
+        <View style={styles.repositorioStat}>
+          <Feather name="git-branch" size={12} color="#10b981" />
+          <Text style={[
+            styles.repositorioStatText,
+            isSmallScreen && styles.repositorioStatTextSmall
+          ]}>{repositorio.forks_count}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -457,6 +548,36 @@ export default function App() {
               styles.coluna,
               isSmallScreen && styles.colunaSmall
             ]}>
+              {/* Seção de Repositórios do GitHub */}
+              <View style={[
+                styles.card,
+                isSmallScreen && styles.cardSmall,
+                isLargeScreen && styles.cardLarge
+              ]}>
+                <View style={styles.tituloContainer}>
+                  <Feather name="github" size={isSmallScreen ? 18 : 20} color="#6366f1" />
+                  <Text style={[
+                    styles.tituloSecao,
+                    isSmallScreen && styles.tituloSecaoSmall
+                  ]}>Repositórios GitHub</Text>
+                </View>
+                
+                {carregando ? (
+                  <ActivityIndicator size="small" color="#6366f1" />
+                ) : (
+                  <View>
+                    {repositorios.map(renderRepositorio)}
+                    <TouchableOpacity 
+                      style={styles.verMaisButton}
+                      onPress={() => handlePressContato('https://github.com/AndrewKaue10?tab=repositories')}
+                    >
+                      <Text style={styles.verMaisButtonText}>Ver mais repositórios</Text>
+                      <Feather name="external-link" size={14} color="#6366f1" />
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
+
               {/* Seção de Experiência Profissional */}
               <View style={[
                 styles.card,
@@ -526,6 +647,35 @@ export default function App() {
         ) : (
           // Layout para telas pequenas - uma coluna
           <View style={styles.singleColumn}>
+            {/* Seção de Repositórios do GitHub */}
+            <View style={[
+              styles.card,
+              isSmallScreen && styles.cardSmall
+            ]}>
+              <View style={styles.tituloContainer}>
+                <Feather name="github" size={isSmallScreen ? 18 : 20} color="#6366f1" />
+                <Text style={[
+                  styles.tituloSecao,
+                  isSmallScreen && styles.tituloSecaoSmall
+                ]}>Repositórios GitHub</Text>
+              </View>
+              
+              {carregando ? (
+                <ActivityIndicator size="small" color="#6366f1" />
+              ) : (
+                <View>
+                  {repositorios.map(renderRepositorio)}
+                  <TouchableOpacity 
+                    style={styles.verMaisButton}
+                    onPress={() => handlePressContato('https://github.com/AndrewKaue10?tab=repositories')}
+                  >
+                    <Text style={styles.verMaisButtonText}>Ver mais repositórios</Text>
+                    <Feather name="external-link" size={14} color="#6366f1" />
+                  </TouchableOpacity>
+                </View>
+              )}
+            </View>
+
             {/* Seção de Contato */}
             <View style={[
               styles.card,
@@ -705,7 +855,7 @@ export default function App() {
   );
 }
 
-// Estilos
+// Estilos atualizados
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -1095,6 +1245,78 @@ const styles = StyleSheet.create({
   },
   cursoPeriodoSmall: {
     fontSize: 9,
+  },
+
+  // Repositórios GitHub
+  repositorioItem: {
+    backgroundColor: '#f8fafc',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  repositorioItemSmall: {
+    padding: 10,
+    marginBottom: 6,
+  },
+  repositorioHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+  repositorioNome: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#1e293b',
+    marginLeft: 6,
+  },
+  repositorioNomeSmall: {
+    fontSize: 12,
+  },
+  repositorioDescricao: {
+    fontSize: 11,
+    color: '#64748b',
+    lineHeight: 14,
+    marginBottom: 8,
+  },
+  repositorioDescricaoSmall: {
+    fontSize: 10,
+    lineHeight: 13,
+  },
+  repositorioStats: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  repositorioStat: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  linguagemDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+  },
+  repositorioStatText: {
+    fontSize: 10,
+    color: '#64748b',
+  },
+  repositorioStatTextSmall: {
+    fontSize: 9,
+  },
+  verMaisButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+    marginTop: 8,
+    gap: 6,
+  },
+  verMaisButtonText: {
+    fontSize: 12,
+    color: '#6366f1',
+    fontWeight: '500',
   },
 
   // Habilidades
