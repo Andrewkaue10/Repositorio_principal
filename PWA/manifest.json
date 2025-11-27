@@ -1,0 +1,20 @@
+{
+  "name": "País e Câmera",
+  "short_name": "Meu País",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#2980b9",
+  "theme_color": "#2980b9",
+  "icons": [
+    {
+      "src": "icons/icon196x196.png",
+      "sizes": "196x196",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon258x258.png",
+      "sizes": "258x258",
+      "type": "image/png"
+    }
+  ]
+}
