@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "@expo/vector-icons": "^15.0.3",
+    "@react-navigation/native": "^7.1.21",
+    "@react-navigation/native-stack": "^7.8.0",
+    "@react-navigation/stack": "^7.6.7",
+    "@types/react-native": "^0.73.0",
+    "react-native-paper": "^5.14.5"
+  },
+  "devDependencies": {
+    "@types/react": "~19.1.10",
+    "typescript": "~5.9.2"
+  }
+}

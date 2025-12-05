@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2980b9">
+  <title>PWA - País & Câmera</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon196x196.png" type="image/png">
+
+</head>
+<body>
+  <div class="container">
+    <h1>Descubra o seu país:</h1>
+    <button id="getLocation">Detectar minha localização</button>
+    <div id="info" class="card"></div>
+
+    <h2>Câmera</h2>
+    <button id="openCamera">Abrir câmera</button>
+    <video id="camera" autoplay playsinline></video>
+    <canvas id="snapshot"></canvas>
+    <button id="takePhoto" style="display:none;">Tirar foto</button>
+  </div>
+
+  <script src="script.js"></script>
+
+  <script>
+    // Registro único do Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log('✅ Service Worker registrado com sucesso!'))
+        .catch(err => console.error('❌ Erro ao registrar o Service Worker:', err));
+    }
+  </script>
+</body>
+</html>
